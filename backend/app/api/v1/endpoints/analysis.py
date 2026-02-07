@@ -75,9 +75,14 @@ async def start_analysis(
         db.commit()
         db.refresh(analysis)
         
-        # TODO: Start Celery task here
-        # For now, we'll just mark it as pending
-        logger.info(f"Analysis created: {analysis.id}")
+        # Start Celery task
+        from app.tasks.analysis_tasks import analyze_genome_task
+        task = analyze_genome_task.apply_async(
+            args=[analysis.id, genome.file_path, genome.accession],
+            task_id=task_id
+        )
+        
+        logger.info(f"Analysis created: {analysis.id}, Task: {task.id}")
         
         return AnalysisStatus(
             analysis_id=analysis.id,
