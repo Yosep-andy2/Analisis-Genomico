@@ -1,0 +1,116 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: genomics_postgres
+    environment:
+      POSTGRES_DB: genomics_db
+      POSTGRES_USER: genomics_user
+      POSTGRES_PASSWORD: genomics_pass
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U genomics_user -d genomics_db" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - genomics_network
+
+  # Redis Cache & Celery Broker
+  redis:
+    image: redis:7-alpine
+    container_name: genomics_redis
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - genomics_network
+
+  # Backend API
+  backend:
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile
+    container_name: genomics_backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://genomics_user:genomics_pass@postgres:5432/genomics_db
+      REDIS_URL: redis://redis:6379/0
+      NCBI_EMAIL: ${NCBI_EMAIL:-your-email@example.com}
+      NCBI_API_KEY: ${NCBI_API_KEY:-}
+      DEBUG: ${DEBUG:-True}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - ../../backend/app:/app/app
+      - ../../data:/app/data
+      - ../../logs/backend:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - genomics_network
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Celery Worker
+  celery_worker:
+    build:
+      context: ../../backend
+      dockerfile: Dockerfile
+    container_name: genomics_celery_worker
+    environment:
+      DATABASE_URL: postgresql://genomics_user:genomics_pass@postgres:5432/genomics_db
+      REDIS_URL: redis://redis:6379/0
+      NCBI_EMAIL: ${NCBI_EMAIL:-your-email@example.com}
+      NCBI_API_KEY: ${NCBI_API_KEY:-}
+      CELERY_BROKER_URL: redis://redis:6379/0
+      CELERY_RESULT_BACKEND: redis://redis:6379/0
+    volumes:
+      - ../../backend/app:/app/app
+      - ../../data:/app/data
+      - ../../logs/celery:/app/logs
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - genomics_network
+    command: celery -A app.tasks.celery_app worker --loglevel=info
+  # Frontend (will be configured later)
+  # frontend:
+  #   build:
+  #     context: ../../frontend
+  #     dockerfile: Dockerfile
+  #   container_name: genomics_frontend
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     VITE_API_URL: http://localhost:8000/api/v1
+  #   volumes:
+  #     - ../../frontend/src:/app/src
+  #   depends_on:
+  #     - backend
+  #   networks:
+  #     - genomics_network
+
+volumes:
+  postgres_data:
+
+
+networks:
+  genomics_network:
+    driver: bridge
