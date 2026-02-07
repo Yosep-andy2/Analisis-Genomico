@@ -1,0 +1,66 @@
+{
+  "NC_000913.3": {
+    "organism": "Escherichia coli str. K-12 substr. MG1655",
+    "description": "Complete genome of E. coli K-12 MG1655, the most studied bacterial strain",
+    "genome_size": 4641652,
+    "gc_content": 50.8,
+    "gene_count": 4321,
+    "avg_gene_length": 948,
+    "coding_density": 87.8,
+    "stop_codon_frequencies": {
+      "TAA": 0.61,
+      "TAG": 0.09,
+      "TGA": 0.30
+    },
+    "reference": "Blattner et al. (1997) Science 277:1453-1462",
+    "ncbi_url": "https://www.ncbi.nlm.nih.gov/nuccore/NC_000913.3"
+  },
+  "NC_002695.2": {
+    "organism": "Escherichia coli O157:H7 str. Sakai",
+    "description": "Pathogenic E. coli strain O157:H7",
+    "genome_size": 5498450,
+    "gc_content": 50.5,
+    "gene_count": 5361,
+    "avg_gene_length": 920,
+    "coding_density": 86.2,
+    "stop_codon_frequencies": {
+      "TAA": 0.62,
+      "TAG": 0.08,
+      "TGA": 0.30
+    },
+    "reference": "Hayashi et al. (2001) DNA Res 8:11-22",
+    "ncbi_url": "https://www.ncbi.nlm.nih.gov/nuccore/NC_002695.2"
+  },
+  "NC_000964.3": {
+    "organism": "Bacillus subtilis subsp. subtilis str. 168",
+    "description": "Model Gram-positive bacterium",
+    "genome_size": 4215606,
+    "gc_content": 43.5,
+    "gene_count": 4176,
+    "avg_gene_length": 890,
+    "coding_density": 87.9,
+    "stop_codon_frequencies": {
+      "TAA": 0.58,
+      "TAG": 0.11,
+      "TGA": 0.31
+    },
+    "reference": "Kunst et al. (1997) Nature 390:249-256",
+    "ncbi_url": "https://www.ncbi.nlm.nih.gov/nuccore/NC_000964.3"
+  },
+  "NC_003197.2": {
+    "organism": "Salmonella enterica subsp. enterica serovar Typhimurium str. LT2",
+    "description": "Model organism for bacterial pathogenesis",
+    "genome_size": 4857432,
+    "gc_content": 52.2,
+    "gene_count": 4489,
+    "avg_gene_length": 955,
+    "coding_density": 88.1,
+    "stop_codon_frequencies": {
+      "TAA": 0.60,
+      "TAG": 0.09,
+      "TGA": 0.31
+    },
+    "reference": "McClelland et al. (2001) Nature 413:852-856",
+    "ncbi_url": "https://www.ncbi.nlm.nih.gov/nuccore/NC_003197.2"
+  }
+}
