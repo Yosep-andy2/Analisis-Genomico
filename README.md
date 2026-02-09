@@ -169,7 +169,10 @@ Analisis-Genomico/
 └── scripts/              # Scripts de utilidad
 ```
 
-**Documentación completa:** Ver [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)
+**Documentación completa:**
+- [PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md) - Estructura de directorios
+- [DEPLOYMENT.md](DEPLOYMENT.md) - Guía de despliegue y testing
+- [docs/api.md](docs/api.md) - Documentación de API
 
 ---
 

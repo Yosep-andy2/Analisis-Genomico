@@ -1,0 +1,28 @@
+============================= test session starts =============================
+platform win32 -- Python 3.13.0, pytest-7.4.3, pluggy-1.6.0
+rootdir: C:\Analisis-Genomico\backend
+plugins: anyio-4.12.0, langsmith-0.4.49, cov-4.1.0
+collected 0 items / 1 error
+
+=================================== ERRORS ====================================
+______ ERROR collecting tests/unit/test_analyzers/test_codon_analyzer.py ______
+ImportError while importing test module 'C:\Analisis-Genomico\backend\tests\unit\test_analyzers\test_codon_analyzer.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+C:\Users\andyy\AppData\Local\Programs\Python\Python313\Lib\importlib\__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+tests\unit\test_analyzers\test_codon_analyzer.py:2: in <module>
+    from app.analyzers.codon_analyzer import CodonAnalyzer
+app\analyzers\codon_analyzer.py:5: in <module>
+    from Bio import SeqIO
+E   ModuleNotFoundError: No module named 'Bio'
+============================== warnings summary ===============================
+app\core\config.py:7
+  C:\Analisis-Genomico\backend\app\core\config.py:7: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+    class Settings(BaseSettings):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+ERROR tests/unit/test_analyzers/test_codon_analyzer.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+========================= 1 warning, 1 error in 0.20s =========================
